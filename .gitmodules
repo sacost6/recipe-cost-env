@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/sacost6/recipecost-nodejs.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/sacost6/recipe-cost-react-ui.git
