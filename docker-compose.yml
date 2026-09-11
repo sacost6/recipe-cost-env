@@ -1,0 +1,33 @@
+services:
+  backend:
+    env_file:
+      - ../../nodejs/recipecost-nodejs/.env.dev
+    build:
+      context: ../../nodejs/recipecost-nodejs
+      dockerfile: Dockerfile.dev
+    container_name: recipe-cost-backend
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../nodejs/recipecost-nodejs:/app
+      - /app/node_modules
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ../../react/recipe-cost-react-ui/RecipeCost
+      dockerfile: Dockerfile.dev
+    container_name: recipe-cost-frontend
+    working_dir: /app
+    ports:
+      - "5172:5172"
+    volumes:
+      - ../../react/recipe-cost-react-ui/RecipeCost:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:5172
+    depends_on:
+      - backend
+    command: npm run dev -- --host 0.0.0.0
