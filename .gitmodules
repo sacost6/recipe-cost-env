@@ -6,7 +6,7 @@
 	url = https://github.com/sacost6/recipe-cost-react-ui.git
 [submodule "kroger-service"]
 	path = kroger-service
-	url = git@github.com:sacost6/recipe-cost-pricing-service.git
+	url = https://github.com/sacost6/recipe-cost-price-data.git
 [submodule "pricing-service"]
 	path = pricing-service
-	url = https://github.com/sacost6/recipe-cost-price-data.git
+	url = git@github.com:sacost6/recipe-cost-pricing-service.git
