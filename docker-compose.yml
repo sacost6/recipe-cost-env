@@ -26,7 +26,6 @@ services:
       - ./.env.dev
     environment:
       PORT: "3001"
-      KROGER_SERVICE_TOKEN: ${KROGER_SERVICE_TOKEN:-local-development-only-token}
     healthcheck:
       test:
         - CMD
@@ -51,7 +50,6 @@ services:
     environment:
       KROGER_SERVICE_URL: http://kroger-service:3001
       PRICING_SERVICE_URL: http://pricing-service:8080
-      KROGER_SERVICE_TOKEN: ${KROGER_SERVICE_TOKEN:-local-development-only-token}
       PRICING_SERVICE_TOKEN: ${PRICING_SERVICE_TOKEN:-local-development-pricing-token}
     depends_on:
       kroger-service:
