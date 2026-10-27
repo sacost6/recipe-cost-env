@@ -1,10 +1,29 @@
 services:
+  pricing-service:
+    build:
+      context: ./pricing-service
+    env_file:
+      - ./.env.dev
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      PRICING_SERVICE_TOKEN: ${PRICING_SERVICE_TOKEN:-local-development-pricing-token}
+      USDA_FDC_API_KEY: ${USDA_FDC_API_KEY:-}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --silent http://127.0.0.1:8080/healthz >/dev/null",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
   kroger-service:
     build:
       context: ./kroger-service
     env_file:
-      - path: ./kroger-service/.env.dev
-        required: false
+      - ./.env.dev
     environment:
       PORT: "3001"
       KROGER_SERVICE_TOKEN: ${KROGER_SERVICE_TOKEN:-local-development-only-token}
@@ -21,7 +40,7 @@ services:
 
   backend:
     env_file:
-      - ./backend/.env.dev
+      - ./.env.dev
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -31,11 +50,13 @@ services:
       - backend_node_modules:/app/node_modules
     environment:
       KROGER_SERVICE_URL: http://kroger-service:3001
+      PRICING_SERVICE_URL: http://pricing-service:8080
       KROGER_SERVICE_TOKEN: ${KROGER_SERVICE_TOKEN:-local-development-only-token}
-      KROGER_CLIENT_ID: ""
-      KROGER_CLIENT_SECRET: ""
+      PRICING_SERVICE_TOKEN: ${PRICING_SERVICE_TOKEN:-local-development-pricing-token}
     depends_on:
       kroger-service:
+        condition: service_healthy
+      pricing-service:
         condition: service_healthy
     command: npm run dev
 
