@@ -5,3 +5,16 @@ backend/.env
 backend/.env.*
 !backend/.env.example
 !backend/.env.dev.example
+.neon
+node_modules/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+
+# Firebase local cache
+.firebase/

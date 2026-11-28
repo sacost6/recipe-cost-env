@@ -1,0 +1,11 @@
+{
+  "name": "recipe-cost-env",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix backend run build && npm --prefix frontend run build && dotnet build pricing-service/RecipeCost.Pricing.csproj"
+  },
+  "dependencies": {
+    "@neon/config": "^1.14.6",
+    "@neon/env": "^2.1.9"
+  }
+}
